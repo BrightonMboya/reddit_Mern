@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require("path")
 const expressValidator = require('express-validator');
 const passport = require('passport');
 const swaggerJSDoc = require("swagger-jsdoc");
@@ -12,6 +13,7 @@ const jwtStrategy = require('./auth/jwt');
 const app = express();
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, "build")))
 app.use(express.json());
 app.use(expressValidator());
 app.use(morgan('common'));

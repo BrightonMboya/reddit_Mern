@@ -1,8 +1,11 @@
 const users = require('./controllers/users');
 const posts = require('./controllers/posts');
+const path = require("path")
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth } = require('./auth');
 const router = require('express').Router();
+
+
 
 
 router.post('/login', users.validate(), users.login);
@@ -29,8 +32,11 @@ router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
 module.exports = app => {
   app.use('/api', router);
 
-  app.get('*', (req, res) => {
-    res.status(404).json({ message: 'not found' });
+  app.use('*', (req, res, ) => {
+    console.log("ret", req.url)
+    return res.sendFile("./build/index.html", {
+      root:path.join(__dirname, "")
+    })
   });
 
   app.use((err, req, res, next) => {
